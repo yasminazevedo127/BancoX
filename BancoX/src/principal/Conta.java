@@ -6,7 +6,7 @@ public abstract class Conta {
 	private int numero;
 	private String cliente;
 	private double saldo;
-	protected int tipo;
+	protected String tipo;
 	
 	public Conta(String cliente) {
         this.numero = cont++;
@@ -33,7 +33,7 @@ public abstract class Conta {
 	public void setSaldo(double saldo) {
 		this.saldo = saldo;
 	}
-	public int getTipo() {
+	public String getTipo() {
 		return tipo;
 	}
 	public void depositar(double valor) {
@@ -41,7 +41,7 @@ public abstract class Conta {
 			this.saldo += valor;
 		}
 	}
-	public abstract void sacar(double valor);
+	public abstract boolean sacar(double valor);
 	public abstract void transferir(Conta destino, double valor);
 
 	public void exibirConta() {

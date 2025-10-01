@@ -14,13 +14,16 @@ public class BancoX {
 		int acao;
         boolean sair = false;
         while (sair != true) {
-            System.out.println("\n====== Menu ======");
+            System.out.println("\n====== Menu Principal ======");
             System.out.println(
-            		"Digite:\n" +
-            	    "1. Registrar Pedido\n" +
-            	    "2. Remover Pedido\n" +
-            	    "3. Listar Pedidos\n" +
-            	    "0. Sair"
+            		"Escolha uma opção:\n" +
+            	    "1. Criar Conta\n" +
+            	    "2. Realizar Depósito\n" +
+            	    "3. Realizar Saque\n" +
+            	    "4. Realizar Transferência " + 
+            	    "5. Listar Contas" +
+            	    "6. Calcular Total de Tributos" +
+            	    "7. Sair"
             	);
             acao = leitor.nextInt();
             leitor.nextLine(); 
@@ -30,8 +33,8 @@ public class BancoX {
                 	System.out.print("Nome do cliente: ");
                     String nome = leitor.nextLine();
                     System.out.print("Tipo de conta (1-Corrente, 2-Poupança): ");
-                    int tipo = leitor.nextInt();
-                    Conta conta = (tipo == 1) ? new ContaCorrente(nome) : new ContaPoupanca(nome);
+                    int intTipo = leitor.nextInt();
+                    Conta conta = (intTipo == 1) ? new ContaCorrente(nome) : new ContaPoupanca(nome);
                     banco.addConta(conta);
                     System.out.println("Conta criada: " + conta);
                     System.out.println("Conta criada. Número da conta (índice): " + (contas.size() - 1));
@@ -93,7 +96,7 @@ public class BancoX {
     }
 	
 	private static void listarContas(ArrayList<Conta> contas) {
-		System.out.println("\n--- LISTA DE CONTAS ---");
+		System.out.println("\n===== LISTA DE CONTAS =====");
         for (Conta conta: contas) {
             conta.exibirConta();
         }
