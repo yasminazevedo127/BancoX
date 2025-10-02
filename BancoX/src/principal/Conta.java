@@ -1,15 +1,14 @@
 package principal;
 
 public abstract class Conta {
-	
-	protected static int cont = 1;
+	private static int cont = 1;
 	private int numero;
 	private String cliente;
 	private double saldo;
 	protected String tipo;
 	
 	public Conta(String cliente) {
-        this.numero = cont++;
+		this.numero = cont++;
         this.cliente = cliente;
         this.saldo = 0.0;
     }
@@ -33,9 +32,7 @@ public abstract class Conta {
 	public void setSaldo(double saldo) {
 		this.saldo = saldo;
 	}
-	public String getTipo() {
-		return tipo;
-	}
+	public abstract String getTipo();
 	public void depositar(double valor) {
 		if (valor > 0) {
 			this.saldo += valor;

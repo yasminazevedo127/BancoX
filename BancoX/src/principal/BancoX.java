@@ -6,11 +6,10 @@ import java.util.ArrayList;
 public class BancoX {
 
 	private static Scanner leitor = new Scanner(System.in);
-	private static ArrayList<Conta> contas = new ArrayList<Conta>();
+	private static ArrayList<Conta> listaDeContas = new ArrayList<Conta>();
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		BancoX banco = new BancoX();
 		int acao;
         boolean sair = false;
         while (sair != true) {
@@ -20,10 +19,10 @@ public class BancoX {
             	    "1. Criar Conta\n" +
             	    "2. Realizar Depósito\n" +
             	    "3. Realizar Saque\n" +
-            	    "4. Realizar Transferência " + 
-            	    "5. Listar Contas" +
-            	    "6. Calcular Total de Tributos" +
-            	    "7. Sair"
+            	    "4. Realizar Transferência\n" + 
+            	    "5. Listar Contas\n" +
+            	    "6. Calcular Total de Tributos\n" +
+            	    "7. Sair\n"
             	);
             acao = leitor.nextInt();
             leitor.nextLine(); 
@@ -34,39 +33,62 @@ public class BancoX {
                     String nome = leitor.nextLine();
                     System.out.print("Tipo de conta (1-Corrente, 2-Poupança): ");
                     int intTipo = leitor.nextInt();
-                    Conta conta = (intTipo == 1) ? new ContaCorrente(nome) : new ContaPoupanca(nome);
-                    banco.addConta(conta);
-                    System.out.println("Conta criada: " + conta);
-                    System.out.println("Conta criada. Número da conta (índice): " + (contas.size() - 1));
+                    Conta novaConta;
+                    if (intTipo == 1) {
+                        novaConta = new ContaCorrente(nome);
+                    } else {
+                        novaConta = new ContaPoupanca(nome);
+                    }
+                    listaDeContas.add(novaConta);
+                   
+                    System.out.println("Conta criada. Número da conta: " + novaConta.getNumero());
                 	break;
                 case 2:
                 	System.out.print("Número da conta: ");
                     int numero = leitor.nextInt();
-                    System.out.print("Valor: ");
-                    double valor = leitor.nextDouble();
-                    contas.get(numero).depositar(valor);
+                    Conta conta = buscarConta(numero);
+                
+                    if (conta != null) {
+                        System.out.print("Valor: ");
+                        conta.depositar(leitor.nextDouble());
+                    } else {
+                        System.out.println("Conta não encontrada!");
+                    }
                 	break;
                 case 3: 
                 	System.out.print("Número da conta: ");
-                    int num = leitor.nextInt();
-                    System.out.print("Valor: ");
-                    double val = leitor.nextDouble();
-                    contas.get(num).sacar(val);
+                    Conta sconta = buscarConta(leitor.nextInt());
+                    if (sconta != null) {
+                        System.out.print("Valor: ");
+                        double valor = leitor.nextDouble();
+                        sconta.sacar(valor);
+                    } else {
+                        System.out.println("Conta não encontrada!");
+                    }
                 	break;
                 case 4:
                 	System.out.print("Conta origem: ");
-                    int origem = leitor.nextInt();
+                	int origemNum = leitor.nextInt();
+                    Conta origem = buscarConta(origemNum);
+                    
                     System.out.print("Conta destino: ");
-                    int destino = leitor.nextInt();
+                    int destinoNum = leitor.nextInt();
+                    Conta destino = buscarConta(destinoNum);
+                    
                     System.out.print("Valor: ");
                     double v = leitor.nextDouble();
-                    contas.get(origem).transferir(contas.get(destino), v);
+                    
+                    if (origem != null && destino != null) {
+                    	System.out.print("Valor: ");
+                    	double valor = leitor.nextDouble();
+                    	origem.transferir(destino, valor);
+                    }
                     break;
                 case 5:
-                	listarContas(contas);
+                	listarContas(listaDeContas);
                 	break;
                 case 6:
-                	calcularTotalDeTributos(contas);
+                	calcularTotalDeTributos(listaDeContas);
                 case 7: 
                 	sair = true;
                 	break;
@@ -76,31 +98,37 @@ public class BancoX {
         }
 	}
 	
-	public static void calcularTotalDeTributos(ArrayList<Conta> contas) {
+	public static void calcularTotalDeTributos(ArrayList<Conta> listaDeContas) {
 		double totalTributos = 0.0;
 		
-		for (Conta conta : contas) {
-		
-		
-		Tributavel contaTributavel = (Tributavel) conta;
-		totalTributos += contaTributavel.calculaTributos();
-		}
-	
+		for (Conta conta : listaDeContas) {
+			// Verifica se a conta da iteração atual implementa a interface ITributavel
+			if (conta instanceof Tributavel) {
+			// Se sim, fazemos um "cast" para poder chamar o método da interface
+				Tributavel contaTributavel = (Tributavel) conta;
+				totalTributos += contaTributavel.calculaTributos();
+			}
+			}
 		System.out.println("\n========================================");
 		System.out.println("Total de tributos a recolher: R$ " + totalTributos);
 		System.out.println("========================================");
 	}
+
 	
-	public void addConta(Conta conta) {
-        contas.add(conta);
-    }
-	
-	private static void listarContas(ArrayList<Conta> contas) {
+	private static void listarContas(ArrayList<Conta> listaDeContas) {
 		System.out.println("\n===== LISTA DE CONTAS =====");
-        for (Conta conta: contas) {
+        for (Conta conta: listaDeContas) {
             conta.exibirConta();
         }
-      
 	}
-
+	
+	
+	private static Conta buscarConta(int numero) {
+        for (Conta c : listaDeContas) {
+            if (c.getNumero() == numero) {
+                return c;
+            }
+        }
+        return null;
+    }
 }

@@ -34,4 +34,10 @@ public class ContaCorrente extends Conta implements Tributavel{
 		return (getSaldo() * 0.01);
 	}
 
+	@Override
+	public String getTipo() {
+		// TODO Auto-generated method stub
+		return "Corrente";
+	}
+
 }
