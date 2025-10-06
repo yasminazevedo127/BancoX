@@ -13,16 +13,16 @@ public class BancoX {
 		int acao;
         boolean sair = false;
         while (sair != true) {
-            System.out.println("\n====== Menu Principal ======");
+            System.out.println("\n====== BancoX ======");
             System.out.println(
-            		"Escolha uma opção:\n" +
             	    "1. Criar Conta\n" +
             	    "2. Realizar Depósito\n" +
             	    "3. Realizar Saque\n" +
             	    "4. Realizar Transferência\n" + 
             	    "5. Listar Contas\n" +
             	    "6. Calcular Total de Tributos\n" +
-            	    "7. Sair\n"
+            	    "7. Sair\n" +
+            	    "Escolha uma opção: "
             	);
             acao = leitor.nextInt();
             leitor.nextLine(); 
@@ -57,11 +57,11 @@ public class BancoX {
                 	break;
                 case 3: 
                 	System.out.print("Número da conta: ");
-                    Conta sconta = buscarConta(leitor.nextInt());
-                    if (sconta != null) {
+                    Conta sConta = buscarConta(leitor.nextInt());
+                    if (sConta != null) {
                         System.out.print("Valor: ");
                         double valor = leitor.nextDouble();
-                        sconta.sacar(valor);
+                        sConta.sacar(valor);
                     } else {
                         System.out.println("Conta não encontrada!");
                     }
@@ -74,9 +74,6 @@ public class BancoX {
                     System.out.print("Conta destino: ");
                     int destinoNum = leitor.nextInt();
                     Conta destino = buscarConta(destinoNum);
-                    
-                    System.out.print("Valor: ");
-                    double v = leitor.nextDouble();
                     
                     if (origem != null && destino != null) {
                     	System.out.print("Valor: ");
@@ -102,9 +99,7 @@ public class BancoX {
 		double totalTributos = 0.0;
 		
 		for (Conta conta : listaDeContas) {
-			// Verifica se a conta da iteração atual implementa a interface ITributavel
 			if (conta instanceof Tributavel) {
-			// Se sim, fazemos um "cast" para poder chamar o método da interface
 				Tributavel contaTributavel = (Tributavel) conta;
 				totalTributos += contaTributavel.calculaTributos();
 			}
