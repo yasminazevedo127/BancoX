@@ -1,7 +1,7 @@
 package principal;
 
 public abstract class Conta {
-	private static int cont = 1;
+	private static int cont = 1000;
 	private int numero;
 	private String cliente;
 	private double saldo;

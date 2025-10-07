@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 
-public class BancoX {
+public class BancoNimsay {
 
 	private static Scanner leitor = new Scanner(System.in);
 	private static ArrayList<Conta> listaDeContas = new ArrayList<Conta>();
@@ -13,7 +13,7 @@ public class BancoX {
 		int acao;
         boolean sair = false;
         while (sair != true) {
-            System.out.println("\n====== BancoX ======");
+            System.out.println("\n====== Banco Nimsay ======");
             System.out.println(
             	    "1. Criar Conta\n" +
             	    "2. Realizar Depósito\n" +
@@ -31,17 +31,26 @@ public class BancoX {
                 case 1:
                 	System.out.print("Nome do cliente: ");
                     String nome = leitor.nextLine();
-                    System.out.print("Tipo de conta (1-Corrente, 2-Poupança): ");
-                    int intTipo = leitor.nextInt();
-                    Conta novaConta;
-                    if (intTipo == 1) {
-                        novaConta = new ContaCorrente(nome);
-                    } else {
-                        novaConta = new ContaPoupanca(nome);
+                    int intTipo = 0;
+                    while (intTipo<1 || intTipo >2) {
+                    	System.out.print("Tipo de conta (1-Corrente, 2-Poupança): ");
+                    	intTipo = leitor.nextInt();
+                    	Conta novaConta;
+                    	switch (intTipo) {
+                    		case 1: 
+                    			novaConta = new ContaCorrente(nome);
+                    			listaDeContas.add(novaConta);
+                    			System.out.println("Conta Corrente criada. Número da conta: " + novaConta.getNumero());
+                    			break;
+                    		case 2:
+                    			novaConta = new ContaPoupanca(nome);
+                    			listaDeContas.add(novaConta);
+                    			System.out.println("Conta Poupança criada. Número da conta: " + novaConta.getNumero());
+                    			break;
+                    		default: 
+                    			System.out.println("Opção inválida. Digite novamente!");
+                    	}
                     }
-                    listaDeContas.add(novaConta);
-                   
-                    System.out.println("Conta criada. Número da conta: " + novaConta.getNumero());
                 	break;
                 case 2:
                 	System.out.print("Número da conta: ");
