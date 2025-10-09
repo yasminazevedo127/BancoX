@@ -21,11 +21,13 @@ public class ContaCorrente extends Conta implements Tributavel{
 	}
 
 	@Override
-	public void transferir(Conta destino, double valor) {
+	public boolean transferir(Conta destino, double valor) {
 		// TODO Auto-generated method stub
 		if (sacar(valor)) {
 			destino.depositar(valor);
+			return true;
 		}
+		return false;
 	}
 
 	@Override

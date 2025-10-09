@@ -21,11 +21,16 @@ public class ContaPoupanca extends Conta{
 	}
 
 	@Override
-	public void transferir(Conta destino, double valor) {
+	public boolean transferir(Conta destino, double valor) {
 		// TODO Auto-generated method stub
 		if (sacar(valor)) {
 			destino.depositar(valor);
+			if(destino.depositar(valor) == true) {
+				return true;
+			}
+			
 		}
+		return false;
 	}
 
 	@Override

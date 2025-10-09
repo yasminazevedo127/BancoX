@@ -59,7 +59,9 @@ public class BancoNimsay {
                 
                     if (conta != null) {
                         System.out.print("Valor: ");
-                        conta.depositar(leitor.nextDouble());
+                        if(conta.depositar(leitor.nextDouble())) {
+                        	System.out.println("Deposito realizado com sucesso!");
+                        }
                     } else {
                         System.out.println("Conta não encontrada!");
                     }
@@ -70,7 +72,9 @@ public class BancoNimsay {
                     if (sConta != null) {
                         System.out.print("Valor: ");
                         double valor = leitor.nextDouble();
-                        sConta.sacar(valor);
+                        if(sConta.sacar(valor)) {
+                        	System.out.println("Saque realizado com sucesso!");
+                        }
                     } else {
                         System.out.println("Conta não encontrada!");
                     }
@@ -87,7 +91,10 @@ public class BancoNimsay {
                     if (origem != null && destino != null) {
                     	System.out.print("Valor: ");
                     	double valor = leitor.nextDouble();
-                    	origem.transferir(destino, valor);
+                    	if(origem.transferir(destino, valor)) {
+                    		System.out.println("Tranferencia realizada com sucesso!");
+                    	}
+                    	
                     }
                     break;
                 case 5:
@@ -95,6 +102,7 @@ public class BancoNimsay {
                 	break;
                 case 6:
                 	calcularTotalDeTributos(listaDeContas);
+                	break;
                 case 7: 
                 	sair = true;
                 	break;

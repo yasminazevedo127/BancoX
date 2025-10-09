@@ -1,7 +1,7 @@
 package principal;
 
 public abstract class Conta {
-	private static int cont = 1000;
+	private static int cont = 101;
 	private int numero;
 	private String cliente;
 	private double saldo;
@@ -33,13 +33,15 @@ public abstract class Conta {
 		this.saldo = saldo;
 	}
 	public abstract String getTipo();
-	public void depositar(double valor) {
+	public boolean depositar(double valor) {
 		if (valor > 0) {
 			this.saldo += valor;
+			return true;
 		}
+		return false;
 	}
 	public abstract boolean sacar(double valor);
-	public abstract void transferir(Conta destino, double valor);
+	public abstract boolean transferir(Conta destino, double valor);
 
 	public void exibirConta() {
 		System.out.println("Número da conta:" + numero);
